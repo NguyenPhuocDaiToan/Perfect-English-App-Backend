@@ -25,46 +25,39 @@ const generateUniqueReferralCode = async (email) => {
  * @param {object} userBody
  * @returns {Promise<User>}
  */
+const { UserRole, UserStatus } = require('../constants/app.constants');
 const register = async (subdomain, userBody) => {
-  // 1. Check email tồn tại (giữ logic cũ)
+  // 1. Check email tồn tại
   const isExist = await userService.findOne({ email: userBody.email }, { lean: true });
   if (isExist) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email đã được sử dụng');
   }
 
-  const { email, phone, password, referralCode } = userBody;
-
+  const { name, email, password } = userBody;
   const isAdmin = subdomain === 'admin';
-  const role = isAdmin ? 'admin' : 'customer';
-
-  // 2. Validate referral TRƯỚC (giống code cũ)
-  let referredByCustomer = null;
-
-  if (!isAdmin && referralCode && referralCode.trim()) {
-    referredByCustomer = await customerService.findOne(
-      {
-        referralCode: referralCode.trim().toUpperCase(),
-        isDeleted: { $ne: true },
-      },
-      { lean: true }
-    );
-
-    if (!referredByCustomer) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Mã giới thiệu không hợp lệ');
-    }
-  }
+  const role = isAdmin ? UserRole.Admin : UserRole.Student;
 
   let newUser;
-
   try {
-    // 3. Tạo User (KHÔNG profile, KHÔNG referral)
     newUser = await userService.create({
-      email,
-      phone,
-      password,
-      role,
-      isEmailVerified: false,
-      isActive: true,
+      name,
+      /**
+       * Đăng nhập
+       * @param {string} email
+       * @param {string} password
+       * @returns {Promise<User>}
+       */
+      const login = async (email, password) => {
+        const user = await userService.findOne({ email });
+        if (!user) {
+          throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
+        }
+        const isMatch = await user.isPasswordMatch(password);
+        if (!isMatch) {
+          throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
+        }
+        return user;
+      };
     });
 
     // 4. Chuẩn bị data profile

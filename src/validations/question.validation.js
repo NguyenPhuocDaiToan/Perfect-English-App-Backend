@@ -1,6 +1,7 @@
 const Joi = require('joi');
+const { objectId } = require('./custom.validation');
 
-const createQuestion = {
+const create = {
   body: Joi.object({
     id: Joi.number(),
     type: Joi.string().required(),
@@ -15,7 +16,30 @@ const createQuestion = {
   }),
 };
 
-const updateQuestion = {
+const paginate = {
+  query: Joi.object({
+    search: Joi.string(),
+    type: Joi.string(),
+    topic: Joi.string(),
+    difficulty: Joi.string(),
+    questionText: Joi.string(),
+    sortBy: Joi.string().allow('', null),
+    limit: Joi.number().integer(),
+    page: Joi.number().integer(),
+    populate: Joi.string().allow('', null),
+  }),
+};
+
+const findById = {
+  params: Joi.object({
+    id: Joi.string().required().custom(objectId),
+  }),
+};
+
+const updateById = {
+  params: Joi.object({
+    id: Joi.string().required().custom(objectId),
+  }),
   body: Joi.object({
     type: Joi.string(),
     topic: Joi.string(),
@@ -26,10 +50,26 @@ const updateQuestion = {
     correctAnswerText: Joi.string(),
     explanation: Joi.string(),
     tags: Joi.array().items(Joi.string()),
+  }).min(1),
+};
+
+const deleteById = {
+  params: Joi.object({
+    id: Joi.string().required().custom(objectId),
+  }),
+};
+
+const deleteManyById = {
+  params: Joi.object({
+    ids: Joi.string().required(),
   }),
 };
 
 module.exports = {
-  createQuestion,
-  updateQuestion,
+  create,
+  paginate,
+  findById,
+  updateById,
+  deleteById,
+  deleteManyById,
 };

@@ -1,6 +1,7 @@
 const Joi = require('joi');
+const { objectId } = require('./custom.validation');
 
-const createLesson = {
+const create = {
   body: Joi.object({
     id: Joi.number(),
     title: Joi.string().required(),
@@ -13,7 +14,29 @@ const createLesson = {
   }),
 };
 
-const updateLesson = {
+const paginate = {
+  query: Joi.object({
+    search: Joi.string(),
+    title: Joi.string(),
+    level: Joi.string(),
+    status: Joi.string(),
+    sortBy: Joi.string().allow('', null),
+    limit: Joi.number().integer(),
+    page: Joi.number().integer(),
+    populate: Joi.string().allow('', null),
+  }),
+};
+
+const findById = {
+  params: Joi.object({
+    id: Joi.string().required().custom(objectId),
+  }),
+};
+
+const updateById = {
+  params: Joi.object({
+    id: Joi.string().required().custom(objectId),
+  }),
   body: Joi.object({
     title: Joi.string(),
     level: Joi.string(),
@@ -22,10 +45,26 @@ const updateLesson = {
     content: Joi.string(),
     exerciseId: Joi.number(),
     isPremium: Joi.boolean(),
+  }).min(1),
+};
+
+const deleteById = {
+  params: Joi.object({
+    id: Joi.string().required().custom(objectId),
+  }),
+};
+
+const deleteManyById = {
+  params: Joi.object({
+    ids: Joi.string().required(),
   }),
 };
 
 module.exports = {
-  createLesson,
-  updateLesson,
+  create,
+  paginate,
+  findById,
+  updateById,
+  deleteById,
+  deleteManyById,
 };

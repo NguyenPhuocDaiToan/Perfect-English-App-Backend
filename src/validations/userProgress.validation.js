@@ -1,6 +1,7 @@
 const Joi = require('joi');
+const { objectId } = require('./custom.validation');
 
-const createUserProgress = {
+const create = {
   body: Joi.object({
     exerciseId: Joi.number().required(),
     userId: Joi.number().required(),
@@ -10,15 +11,53 @@ const createUserProgress = {
   }),
 };
 
-const updateUserProgress = {
+const paginate = {
+  query: Joi.object({
+    search: Joi.string(),
+    exerciseId: Joi.number(),
+    userId: Joi.number(),
+    status: Joi.string().valid('In Progress', 'Completed'),
+    sortBy: Joi.string().allow('', null),
+    limit: Joi.number().integer(),
+    page: Joi.number().integer(),
+    populate: Joi.string().allow('', null),
+  }),
+};
+
+const findById = {
+  params: Joi.object({
+    id: Joi.string().required().custom(objectId),
+  }),
+};
+
+const updateById = {
+  params: Joi.object({
+    id: Joi.string().required().custom(objectId),
+  }),
   body: Joi.object({
     status: Joi.string().valid('In Progress', 'Completed'),
     bestScore: Joi.number().min(0).max(100),
     lastPlayedAt: Joi.date(),
+  }).min(1),
+};
+
+const deleteById = {
+  params: Joi.object({
+    id: Joi.string().required().custom(objectId),
+  }),
+};
+
+const deleteManyById = {
+  params: Joi.object({
+    ids: Joi.string().required(),
   }),
 };
 
 module.exports = {
-  createUserProgress,
-  updateUserProgress,
+  create,
+  paginate,
+  findById,
+  updateById,
+  deleteById,
+  deleteManyById,
 };
