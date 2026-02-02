@@ -4,15 +4,10 @@ module.exports.userValidation = require('./user.validation');
 module.exports.categoryValidation = require('./category.validation');
 module.exports.permissionValidation = require('./permission.validation');
 module.exports.roleValidation = require('./role.validation');
-module.exports.customerValidation = require('./customer.validation');
-module.exports.employeeValidation = require('./employee.validation');
-module.exports.orderValidation = require('./order.validation');
 module.exports.blogPostValidation = require('./blogPost.validation');
 module.exports.blogCategoryValidation = require('./blogCategory.validation');
 module.exports.blogTagValidation = require('./blogTag.validation');
 module.exports.auditLogValidation = require('./auditLog.validation');
-
-module.exports.userAppValidation = require('./userApp.validation');
 module.exports.topicValidation = require('./topic.validation');
 module.exports.lessonValidation = require('./lesson.validation');
 module.exports.questionValidation = require('./question.validation');

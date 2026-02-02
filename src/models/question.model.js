@@ -15,8 +15,8 @@ const questionSchema = new Schema(
     difficulty: { type: String, enum: Object.values(DifficultyLevel), required: true },
     questionText: { type: String, required: true },
     options: [mcqOptionSchema],
-    correctAnswer: { type: Boolean }, // For True/False
-    correctAnswerText: { type: String }, // For FillBlank
+    correctAnswer: { type: Boolean, private: true }, // For True/False, private
+    correctAnswerText: { type: String, private: true }, // For FillBlank, private
     explanation: { type: String },
     tags: [{ type: String }],
   },

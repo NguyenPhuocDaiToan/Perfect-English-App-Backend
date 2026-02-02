@@ -6,7 +6,6 @@ const blogPostRoute = require('./blogPost.route');
 const blogTagRoute = require('./blogTag.route');
 const blogCategoryRoute = require('./blogCategory.route');
 const authRoute = require('../auth.route');
-const customerRoute = require('./customer.route');
 const payosWebhook = require('./payos.webhook');
 const userRoute = require('./user.route');
 const notificationRoute = require('../notification.route');
@@ -37,10 +36,6 @@ const defaultRoutes = [
   {
     path: '/blog-tags',
     route: blogTagRoute,
-  },
-  {
-    path: '/customers',
-    route: customerRoute,
   },
   {
     path: '/payos-webhook',

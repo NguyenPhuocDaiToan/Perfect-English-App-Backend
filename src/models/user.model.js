@@ -6,7 +6,6 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    id: { type: Number, unique: true, index: true },
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true, trim: true, lowercase: true },
     role: { type: String, enum: Object.values(UserRole), default: UserRole.Student },
