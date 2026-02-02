@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins'); // Giả định các plugin này tồn tại
-
 const { Schema } = mongoose;
 
 // --- 1. Sub-Schema cho các Tùy Chọn (Product Option Schema) ---

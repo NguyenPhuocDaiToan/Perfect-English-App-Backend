@@ -22,3 +22,10 @@ module.exports.LayoutSetting = require('./layoutSetting.model');
 module.exports.AuditLog = require('./auditLog.model');
 module.exports.Notification = require('./notification.model');
 module.exports.DistanceCache = require('./distanceCache.model');
+
+module.exports.UserApp = require('./userApp.model');
+module.exports.Topic = require('./topic.model');
+module.exports.Lesson = require('./lesson.model');
+module.exports.Question = require('./question.model');
+module.exports.Exercise = require('./exercise.model');
+module.exports.UserProgress = require('./userProgress.model');

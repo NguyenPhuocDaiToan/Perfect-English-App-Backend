@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
-
 const { Schema } = mongoose;
 
 const CategorySchema = new Schema(

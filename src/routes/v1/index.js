@@ -3,27 +3,26 @@ const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
-const categoryRoute = require('./category.route');
-const productRoute = require('./product.route');
 const comboRoute = require('./combo.route');
 const fileRoute = require('./file.route');
 const roleRoute = require('./role.route');
 const permissionRoute = require('./permission.route');
 const customerRoute = require('./customer.route');
-const orderRoute = require('./order.route');
-const couponRoute = require('./coupon.route');
 const pricePromotionRoute = require('./pricePromotion.route');
 const blogPostRoute = require('./blogPost.route');
 const blogCategoryRoute = require('./blogCategory.route');
 const blogTagRoute = require('./blogTag.route');
-const voucherRoute = require('./voucher.route');
 const employeeRoute = require('./employee.route');
 const menuRoute = require('./menu.route');
-const surchargeRoute = require('./surcharge.route');
-const dealSettingRoute = require('./dealSetting.route');
-const layoutSettingRoute = require('./layoutSetting.route');
 const auditLogRoute = require('./auditLog.route');
 const notificationRoute = require('./notification.route');
+
+const userAppRoute = require('./userApp.route');
+const topicRoute = require('./topic.route');
+const lessonRoute = require('./lesson.route');
+const questionRoute = require('./question.route');
+const exerciseRoute = require('./exercise.route');
+const userProgressRoute = require('./userProgress.route');
 
 const router = express.Router();
 
@@ -37,16 +36,8 @@ const defaultRoutes = [
     route: userRoute,
   },
   {
-    path: '/categories',
-    route: categoryRoute,
-  },
-  {
     path: '/files',
     route: fileRoute,
-  },
-  {
-    path: '/products',
-    route: productRoute,
   },
   {
     path: '/combos',
@@ -69,18 +60,6 @@ const defaultRoutes = [
     route: customerRoute,
   },
   {
-    path: '/orders',
-    route: orderRoute,
-  },
-  {
-    path: '/coupons',
-    route: couponRoute,
-  },
-  {
-    path: '/vouchers',
-    route: voucherRoute,
-  },
-  {
     path: '/price-promotions',
     route: pricePromotionRoute,
   },
@@ -101,24 +80,60 @@ const defaultRoutes = [
     route: menuRoute,
   },
   {
-    path: '/surcharges',
-    route: surchargeRoute,
-  },
-  {
-    path: '/deal-settings',
-    route: dealSettingRoute,
-  },
-  {
-    path: '/layout-settings',
-    route: layoutSettingRoute,
-  },
-  {
     path: '/audit-logs',
     route: auditLogRoute,
   },
   {
     path: '/notifications',
     route: notificationRoute,
+  },
+  {
+    path: '/user-apps',
+    route: userAppRoute,
+  },
+  {
+    path: '/topics',
+    route: topicRoute,
+  },
+  {
+    path: '/lessons',
+    route: lessonRoute,
+  },
+  {
+    path: '/questions',
+    route: questionRoute,
+  },
+  {
+    path: '/exercises',
+    route: exerciseRoute,
+  },
+  {
+    path: '/user-progress',
+    route: userProgressRoute,
+  },
+  {
+    path: '/user-apps',
+    route: userAppRoute,
+  },
+  {
+    path: '/topics',
+    route: topicRoute,
+  },
+  {
+    path: '/lessons',
+    route: lessonRoute,
+  },
+  {
+    path: '/questions',
+    route: questionRoute,
+  },
+  {
+    path: '/exercises',
+    route: exerciseRoute,
+  },
+  {
+    path: '/user-progress',
+    route: userProgressRoute,
   },
 ];
 
