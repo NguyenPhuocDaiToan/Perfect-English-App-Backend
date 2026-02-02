@@ -8,12 +8,10 @@ const fileRoute = require('./file.route');
 const roleRoute = require('./role.route');
 const permissionRoute = require('./permission.route');
 const customerRoute = require('./customer.route');
-const pricePromotionRoute = require('./pricePromotion.route');
 const blogPostRoute = require('./blogPost.route');
 const blogCategoryRoute = require('./blogCategory.route');
 const blogTagRoute = require('./blogTag.route');
 const employeeRoute = require('./employee.route');
-const menuRoute = require('./menu.route');
 const auditLogRoute = require('./auditLog.route');
 const notificationRoute = require('./notification.route');
 
@@ -60,10 +58,6 @@ const defaultRoutes = [
     route: customerRoute,
   },
   {
-    path: '/price-promotions',
-    route: pricePromotionRoute,
-  },
-  {
     path: '/blog-posts',
     route: blogPostRoute,
   },
@@ -76,40 +70,12 @@ const defaultRoutes = [
     route: blogTagRoute,
   },
   {
-    path: '/menu',
-    route: menuRoute,
-  },
-  {
     path: '/audit-logs',
     route: auditLogRoute,
   },
   {
     path: '/notifications',
     route: notificationRoute,
-  },
-  {
-    path: '/user-apps',
-    route: userAppRoute,
-  },
-  {
-    path: '/topics',
-    route: topicRoute,
-  },
-  {
-    path: '/lessons',
-    route: lessonRoute,
-  },
-  {
-    path: '/questions',
-    route: questionRoute,
-  },
-  {
-    path: '/exercises',
-    route: exerciseRoute,
-  },
-  {
-    path: '/user-progress',
-    route: userProgressRoute,
   },
   {
     path: '/user-apps',
