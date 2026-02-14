@@ -46,6 +46,12 @@ class UserRoute extends BaseRoute {
       validate(userValidation.changePassword),
       this.controller.changePassword.bind(this.controller)
     );
+
+    this.router.get(
+      '/leaderboard',
+      auth(), // Authenticated endpoint
+      this.controller.getLeaderboard.bind(this.controller)
+    );
   }
 }
 
