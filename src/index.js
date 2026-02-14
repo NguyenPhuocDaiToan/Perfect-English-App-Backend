@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
 const http = require('http');
-const cron = require('node-cron');
+// const cron = require('node-cron');
 const app = require('./app');
 const config = require('./config/config');
 const logger = require('./config/logger');
-const { sendReferralRemindersToEligibleUsers } = require('./services/email.service');
-const { orderService } = require('./services');
 
 const { initSocket } = require('./config/socket');
 
@@ -27,40 +25,20 @@ mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   });
   // --------------------------
 
-  cron.schedule(
-    '30 19 * * *',
-    async () => {
-      logger.info('[Cron] Starting referral reminder job...');
-      try {
-        const result = await sendReferralRemindersToEligibleUsers();
-        logger.info('[Cron] Referral reminder job completed', result);
-      } catch (error) {
-        logger.error('[Cron] Referral reminder job failed:', error);
-      }
-    },
-    {
-      timezone: 'Asia/Ho_Chi_Minh',
-    }
-  );
-
   // Mỗi 1 phút (* * * * *), hệ thống sẽ chạy hàm quét.
-  cron.schedule(
-    '* * * * *',
-    async () => {
-      try {
-        // 1. Quét đơn quá hạn thanh toán / nhắc thanh toán (Logic cũ)
-        await orderService.scanAndHandlePendingOrders();
-
-        // 2. [THÊM] Quét đơn sắp đến giờ giao (Logic mới)
-        await orderService.scanAndNotifyUpcomingOrders();
-      } catch (error) {
-        logger.error('[Cron] Order Scan Error:', error);
-      }
-    },
-    {
-      timezone: 'Asia/Ho_Chi_Minh',
-    }
-  );
+  // cron.schedule(
+  //   '* * * * *',
+  //   async () => {
+  //     try {
+  //       logger.info('[Cron] Starting scan job...');
+  //     } catch (error) {
+  //       logger.error('[Cron] scan job failed:', error);
+  //     }
+  //   },
+  //   {
+  //     timezone: 'Asia/Ho_Chi_Minh',
+  //   }
+  // );
 });
 
 const exitHandler = () => {

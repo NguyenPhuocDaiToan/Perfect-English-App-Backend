@@ -5,6 +5,7 @@
  * - Upsert (cập nhật nếu tồn tại)
  */
 
+/* eslint-disable no-console, no-await-in-loop */
 const mongoose = require('mongoose');
 const he = require('he');
 const BlogPost = require('../models/blogPost.model');

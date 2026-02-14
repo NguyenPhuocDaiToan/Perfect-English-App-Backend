@@ -1,7 +1,8 @@
-
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const { toJSON, paginate } = require('./plugins');
 const { UserRole, UserStatus } = require('../constants/app.constants');
+
 const { Schema } = mongoose;
 
 const userSchema = new Schema(
@@ -29,7 +30,6 @@ userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
   return !!user;
 };
 
-const bcrypt = require('bcryptjs');
 userSchema.methods.isPasswordMatch = async function (password) {
   const user = this;
   return bcrypt.compare(password, user.password);

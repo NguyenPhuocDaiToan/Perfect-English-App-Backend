@@ -15,4 +15,7 @@ module.exports.Topic = require('./topic.model');
 module.exports.Lesson = require('./lesson.model');
 module.exports.Question = require('./question.model');
 module.exports.Exercise = require('./exercise.model');
+module.exports.GrammarTopic = require('./grammarTopic.model');
+module.exports.Testimonial = require('./testimonial.model');
+module.exports.UserActivity = require('./userActivity.model');
 module.exports.UserProgress = require('./userProgress.model');

@@ -32,14 +32,14 @@ const register = catchAsync(async (req, res) => {
 });
 
 const login = catchAsync(async (req, res) => {
-  const { username, password } = req.body;
-  const user = await authService.login(username, password);
+  const { email, password } = req.body;
+  const user = await authService.login(email, password);
 
   // --- LOGIC MỚI: KIỂM TRA SUBDOMAIN VÀ ROLE ---
   const { hostname } = req;
 
   // 2. Kiểm tra xem đây có phải là subdomain 'admin' không
-  const isAdminSubdomain = hostname.startsWith('admin') || hostname.startsWith('web-admin-sandy');
+  const isAdminSubdomain = hostname.startsWith('admin');
 
   // 3. Kiểm tra điều kiện: (Role là 'customer' HOẶC role là 'user') VÀ đang ở trang admin
   const isForbidden = user.role === 'customer' && isAdminSubdomain;
@@ -53,8 +53,6 @@ const login = catchAsync(async (req, res) => {
 
   // Nếu qua được kiểm tra, mới tiếp tục tạo token và set cookie
   const tokens = await tokenService.generateAuthTokens(user);
-
-  const permissions = await getEffectivePermissions(user);
 
   const isProduction = config.env === 'production';
 
@@ -74,15 +72,8 @@ const login = catchAsync(async (req, res) => {
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 ngày
   });
 
-  let me;
-  if (user.role === 'customer') {
-    me = await customerService.findOne({ user: user.id || user._id });
-  } else {
-    me = await employeeService.findOne({ user: user.id || user._id });
-  }
-
-  // Gửi về thông tin user và permissions.
-  res.send({ user, me, permissions, tokens });
+  // Gửi về thông tin user.
+  res.send({ user });
 });
 
 const logout = catchAsync(async (req, res) => {

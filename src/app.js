@@ -13,7 +13,6 @@ const morgan = require('./config/morgan');
 const { jwtStrategy } = require('./config/passport');
 const { authLimiter } = require('./middlewares/rateLimiter');
 const routes = require('./routes/v1');
-const routesPublic = require('./routes/v1/public');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
 
@@ -43,25 +42,19 @@ app.use(mongoSanitize());
 app.use(compression());
 
 // 1. Danh sách các origin được phép
-const allowedOrigins = [
-  'http://localhost:3001',
-  'http://localhost:4200',
-  'http://localhost:3000',
-  'http://localhost:4000',
-  'https://luuchi.com.vn',
-  'https://admin.luuchi.com.vn',
-  'https://web-admin-sandy.vercel.app',
-];
+const allowedOrigins = ['http://localhost:3001', 'http://localhost:4200', 'http://localhost:3000', 'http://localhost:4000'];
 
 const corsOptions = {
-  // origin: (origin, callback) => {
-  //   if (!origin || allowedOrigins.includes(origin)) {
-  //     callback(null, true);
-  //   } else {
-  //     callback(new Error('Not allowed by CORS'));
-  //   }
-  // },
-  origin: allowedOrigins,
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      // Temporarily allow all for debugging if needed, or stick to list
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 };
 
@@ -82,8 +75,8 @@ if (config.env === 'production') {
 }
 
 // v1 api routes
-app.use('/v1', routesPublic);
-app.use('/v1/admin', routes);
+// app.use('/v1', routesPublic);
+app.use('/v1', routes);
 app.use(
   '/storage',
   express.static(path.join(__dirname, '../storage'), {

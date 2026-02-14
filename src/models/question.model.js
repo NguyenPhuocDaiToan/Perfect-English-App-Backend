@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { QuestionType, QuestionTopic, DifficultyLevel } = require('../constants/app.constants');
+
 const { Schema } = mongoose;
 
 const mcqOptionSchema = new Schema({
@@ -9,10 +10,10 @@ const mcqOptionSchema = new Schema({
 
 const questionSchema = new Schema(
   {
-    id: { type: Number, unique: true, index: true },
     type: { type: String, enum: Object.values(QuestionType), required: true },
     topic: { type: String, enum: Object.values(QuestionTopic), required: true },
     difficulty: { type: String, enum: Object.values(DifficultyLevel), required: true },
+    subTopic: { type: String, required: true },
     questionText: { type: String, required: true },
     options: [mcqOptionSchema],
     correctAnswer: { type: Boolean, private: true }, // For True/False, private

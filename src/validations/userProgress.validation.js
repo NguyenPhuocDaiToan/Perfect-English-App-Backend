@@ -3,8 +3,8 @@ const { objectId } = require('./custom.validation');
 
 const create = {
   body: Joi.object({
-    exerciseId: Joi.number().required(),
-    userId: Joi.number().required(),
+    exercise: Joi.string().required().custom(objectId),
+    userId: Joi.string().required().custom(objectId),
     status: Joi.string().valid('In Progress', 'Completed').required(),
     bestScore: Joi.number().min(0).max(100),
     lastPlayedAt: Joi.date(),
@@ -14,8 +14,8 @@ const create = {
 const paginate = {
   query: Joi.object({
     search: Joi.string(),
-    exerciseId: Joi.number(),
-    userId: Joi.number(),
+    exercise: Joi.string().custom(objectId),
+    userId: Joi.string().custom(objectId),
     status: Joi.string().valid('In Progress', 'Completed'),
     sortBy: Joi.string().allow('', null),
     limit: Joi.number().integer(),

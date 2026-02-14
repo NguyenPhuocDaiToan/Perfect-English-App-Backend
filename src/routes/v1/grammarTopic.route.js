@@ -1,6 +1,6 @@
 const BaseRoute = require('../../utils/_base.route');
-const questionController = require('../../controllers/question.controller');
-const questionValidation = require('../../validations/question.validation');
+const grammarTopicController = require('../../controllers/grammarTopic.controller');
+const grammarTopicValidation = require('../../validations/grammarTopic.validation');
 
 function list(req, res, next) {
   const { search } = req.query;
@@ -8,8 +8,8 @@ function list(req, res, next) {
     if (!req.query.$or) {
       req.query.$or = [];
     }
-    req.query.$or.push({ questionText: { $regex: search, $options: 'i' } });
-    req.query.$or.push({ explanation: { $regex: search, $options: 'i' } });
+    req.query.$or.push({ title: { $regex: search, $options: 'i' } });
+    req.query.$or.push({ description: { $regex: search, $options: 'i' } });
     delete req.query.search;
   }
   next();
@@ -35,7 +35,7 @@ function deleteManyById(req, res, next) {
   next();
 }
 
-class QuestionRoute extends BaseRoute {
+class GrammarTopicRoute extends BaseRoute {
   constructor() {
     const middlewares = {
       list: [list],
@@ -45,8 +45,9 @@ class QuestionRoute extends BaseRoute {
       deleteById: [deleteById],
       deleteManyById: [deleteManyById],
     };
-    super(questionController, questionValidation, 'question', middlewares);
+    // Note: resource name from original file was 'grammar-topic'
+    super(grammarTopicController, grammarTopicValidation, 'grammar-topic', middlewares);
   }
 }
 
-module.exports = new QuestionRoute().getRouter();
+module.exports = new GrammarTopicRoute().getRouter();

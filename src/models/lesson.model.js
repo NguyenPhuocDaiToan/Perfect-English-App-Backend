@@ -1,17 +1,19 @@
 const mongoose = require('mongoose');
 const { CEFRLevel, PublishStatus } = require('../constants/app.constants');
+
 const { Schema } = mongoose;
 
 const lessonSchema = new Schema(
   {
-    id: { type: Number, unique: true, index: true },
     title: { type: String, required: true },
+    slug: { type: String, unique: true }, // Added slug based on requirements
     level: { type: String, enum: Object.values(CEFRLevel), required: true },
     status: { type: String, enum: Object.values(PublishStatus), default: PublishStatus.Draft },
-    topicIds: [{ type: Number, ref: 'Topic' }],
+    topics: [{ type: Schema.Types.ObjectId, ref: 'Topic' }],
     content: { type: String },
-    exerciseId: { type: Number, ref: 'Exercise' },
+    exercise: { type: Schema.Types.ObjectId, ref: 'Exercise' },
     isPremium: { type: Boolean, default: false },
+    views: { type: Number, default: 0 }, // Added views based on requirements
   },
   { timestamps: true }
 );

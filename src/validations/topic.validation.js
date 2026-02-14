@@ -3,7 +3,7 @@ const { objectId } = require('./custom.validation');
 
 const create = {
   body: Joi.object({
-    id: Joi.number(),
+    id: Joi.string().custom(objectId),
     title: Joi.string().required(),
     category: Joi.string().required(),
     description: Joi.string(),

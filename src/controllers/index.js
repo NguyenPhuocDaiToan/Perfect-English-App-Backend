@@ -13,4 +13,6 @@ module.exports.topicController = require('./topic.controller');
 module.exports.lessonController = require('./lesson.controller');
 module.exports.questionController = require('./question.controller');
 module.exports.exerciseController = require('./exercise.controller');
-module.exports.userProgressController = require('./userProgress.controller');
+module.exports.grammarTopicController = require('./grammarTopic.controller');
+module.exports.testimonialController = require('./testimonial.controller');
+module.exports.userActivityController = require('./userActivity.controller');

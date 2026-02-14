@@ -12,7 +12,7 @@ const create = {
     email: Joi.string().required().email(),
     password: Joi.string().required().custom(password),
 
-    role: Joi.string().required().valid('guest', 'staff', 'admin'),
+    role: Joi.string().required().valid('Admin', 'Editor', 'Teacher', 'Student'),
 
     roles: Joi.array().items(roleRef),
     extraPermissions: Joi.array().items(permissionRef),
@@ -53,7 +53,7 @@ const updateById = {
       name: Joi.string().trim(),
       email: Joi.string().email(),
       password: Joi.string().custom(password),
-      role: Joi.string().valid('guest', 'staff', 'admin'),
+      role: Joi.string().valid('Admin', 'Editor', 'Teacher', 'Student'),
 
       roles: Joi.array().items(roleRef),
       extraPermissions: Joi.array().items(permissionRef),

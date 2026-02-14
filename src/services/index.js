@@ -13,9 +13,10 @@ module.exports.blogTagService = require('./blogTag.service');
 module.exports.auditLogService = require('./auditLog.service');
 module.exports.notificationService = require('./notification.service');
 
-module.exports.userAppService = require('./userApp.service');
 module.exports.topicService = require('./topic.service');
 module.exports.lessonService = require('./lesson.service');
 module.exports.questionService = require('./question.service');
 module.exports.exerciseService = require('./exercise.service');
-module.exports.userProgressService = require('./userProgress.service');
+module.exports.grammarTopicService = require('./grammarTopic.service');
+module.exports.testimonialService = require('./testimonial.service');
+module.exports.userActivityService = require('./userActivity.service');

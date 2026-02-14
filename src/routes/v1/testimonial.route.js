@@ -1,6 +1,6 @@
 const BaseRoute = require('../../utils/_base.route');
-const questionController = require('../../controllers/question.controller');
-const questionValidation = require('../../validations/question.validation');
+const testimonialController = require('../../controllers/testimonial.controller');
+const testimonialValidation = require('../../validations/testimonial.validation');
 
 function list(req, res, next) {
   const { search } = req.query;
@@ -8,8 +8,9 @@ function list(req, res, next) {
     if (!req.query.$or) {
       req.query.$or = [];
     }
-    req.query.$or.push({ questionText: { $regex: search, $options: 'i' } });
-    req.query.$or.push({ explanation: { $regex: search, $options: 'i' } });
+    req.query.$or.push({ quote: { $regex: search, $options: 'i' } });
+    req.query.$or.push({ author: { $regex: search, $options: 'i' } });
+    req.query.$or.push({ location: { $regex: search, $options: 'i' } });
     delete req.query.search;
   }
   next();
@@ -35,7 +36,7 @@ function deleteManyById(req, res, next) {
   next();
 }
 
-class QuestionRoute extends BaseRoute {
+class TestimonialRoute extends BaseRoute {
   constructor() {
     const middlewares = {
       list: [list],
@@ -45,8 +46,8 @@ class QuestionRoute extends BaseRoute {
       deleteById: [deleteById],
       deleteManyById: [deleteManyById],
     };
-    super(questionController, questionValidation, 'question', middlewares);
+    super(testimonialController, testimonialValidation, 'testimonial', middlewares);
   }
 }
 
-module.exports = new QuestionRoute().getRouter();
+module.exports = new TestimonialRoute().getRouter();

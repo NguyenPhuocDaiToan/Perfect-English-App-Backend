@@ -7,17 +7,17 @@ const create = {
     slug: Joi.string().allow('', null),
     summary: Joi.string().allow('', null),
     content: Joi.string().required(),
+    thumbnail: Joi.string().allow('', null),
     coverImage: Joi.string().allow('', null),
     coverImageAlt: Joi.string().allow('', null),
 
+    topic: Joi.string().custom(objectId).allow('', null),
+    lesson: Joi.string().custom(objectId).allow('', null),
+
     categories: Joi.array().items(Joi.string().custom(objectId)).default([]),
-    tags: Joi.array().items(Joi.string().custom(objectId)).default([]),
+    tags: Joi.array().items(Joi.string()).default([]),
 
-    status: Joi.string().valid('draft', 'published', 'archived').default('draft'),
-    isFeatured: Joi.boolean().default(false),
-    isPinned: Joi.boolean().default(false),
-
-    displayPages: Joi.array().items(Joi.string().valid('sharing', 'community')).default([]),
+    status: Joi.string().valid('Draft', 'Published', 'Archived').default('Draft'),
 
     seoTitle: Joi.string().allow('', null),
     seoDescription: Joi.string().allow('', null),
@@ -33,10 +33,7 @@ const paginate = {
     categorySlug: Joi.string().allow('', null),
     category: Joi.string().custom(objectId).allow('', null),
     tag: Joi.string().custom(objectId).allow('', null),
-    status: Joi.string().valid('draft', 'published', 'archived').allow('', null),
-    displayPage: Joi.string().valid('sharing', 'community').allow('', null),
-    isFeatured: Joi.boolean().allow('', null),
-    isPinned: Joi.boolean().allow('', null),
+    status: Joi.string().valid('Draft', 'Published', 'Archived').allow('', null),
     sortBy: Joi.string().allow('', null),
     select: Joi.string().allow('', null),
     limit: Joi.number().integer().min(1),
@@ -62,13 +59,17 @@ const updateById = {
       slug: Joi.string().allow('', null),
       summary: Joi.string().allow('', null),
       content: Joi.string(),
+      thumbnail: Joi.string().allow('', null),
       coverImage: Joi.string().allow('', null),
       coverImageAlt: Joi.string().allow('', null),
 
-      categories: Joi.array().items(Joi.string().custom(objectId)),
-      tags: Joi.array().items(Joi.string().custom(objectId)),
+      topic: Joi.string().custom(objectId).allow('', null),
+      lesson: Joi.string().custom(objectId).allow('', null),
 
-      status: Joi.string().valid('draft', 'published', 'archived'),
+      categories: Joi.array().items(Joi.string().custom(objectId)),
+      tags: Joi.array().items(Joi.string()),
+
+      status: Joi.string().valid('Draft', 'Published', 'Archived'),
       isFeatured: Joi.boolean(),
       isPinned: Joi.boolean(),
 

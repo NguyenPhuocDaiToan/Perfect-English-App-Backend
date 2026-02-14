@@ -1,16 +1,19 @@
 const mongoose = require('mongoose');
 const { DifficultyLevel } = require('../constants/app.constants');
+
 const { Schema } = mongoose;
 
 const exerciseSchema = new Schema(
   {
-    id: { type: Number, unique: true, index: true },
     title: { type: String, required: true },
-    questionIds: [{ type: Number, ref: 'Question' }],
+    description: { type: String }, // Added description
+    questions: [{ type: Schema.Types.ObjectId, ref: 'Question' }],
     timeLimit: { type: Number },
     difficulty: { type: String, enum: Object.values(DifficultyLevel) },
-    topicIds: [{ type: Number, ref: 'Topic' }],
-    lessonIds: [{ type: Number, ref: 'Lesson' }],
+    topics: [{ type: Schema.Types.ObjectId, ref: 'Topic' }],
+    lessons: [{ type: Schema.Types.ObjectId, ref: 'Lesson' }],
+    status: { type: String, enum: ['Published', 'Draft'], default: 'Draft' }, // Added status
+    isPremium: { type: Boolean, default: false }, // Added isPremium
   },
   { timestamps: true }
 );

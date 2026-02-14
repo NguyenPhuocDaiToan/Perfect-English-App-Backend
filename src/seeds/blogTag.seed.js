@@ -3,6 +3,7 @@
  * Mục đích: Khởi tạo dữ liệu cho Blog Tags từ các bài viết mẫu.
  * - Sử dụng phương pháp "Find and Save" để đảm bảo hooks được kích hoạt.
  */
+/* eslint-disable no-console, no-await-in-loop */
 const mongoose = require('mongoose');
 const BlogTag = require('../models/blogTag.model');
 const User = require('../models/user.model');

@@ -3,13 +3,16 @@ const { objectId } = require('./custom.validation');
 
 const create = {
   body: Joi.object({
-    id: Joi.number(),
+    id: Joi.string().custom(objectId),
     title: Joi.string().required(),
-    questionIds: Joi.array().items(Joi.number()),
+    description: Joi.string().allow('', null),
+    questions: Joi.array().items(Joi.string().custom(objectId)),
     timeLimit: Joi.number(),
     difficulty: Joi.string(),
-    topicIds: Joi.array().items(Joi.number()),
-    lessonIds: Joi.array().items(Joi.number()),
+    topics: Joi.array().items(Joi.string().custom(objectId)),
+    lessons: Joi.array().items(Joi.string().custom(objectId)),
+    status: Joi.string().valid('Published', 'Draft'),
+    isPremium: Joi.boolean(),
   }),
 };
 
@@ -17,6 +20,7 @@ const paginate = {
   query: Joi.object({
     search: Joi.string(),
     title: Joi.string(),
+    status: Joi.string(),
     difficulty: Joi.string(),
     sortBy: Joi.string().allow('', null),
     limit: Joi.number().integer(),
@@ -37,11 +41,14 @@ const updateById = {
   }),
   body: Joi.object({
     title: Joi.string(),
-    questionIds: Joi.array().items(Joi.number()),
+    description: Joi.string().allow('', null),
+    questions: Joi.array().items(Joi.string().custom(objectId)),
     timeLimit: Joi.number(),
     difficulty: Joi.string(),
-    topicIds: Joi.array().items(Joi.number()),
-    lessonIds: Joi.array().items(Joi.number()),
+    topics: Joi.array().items(Joi.string().custom(objectId)),
+    lessons: Joi.array().items(Joi.string().custom(objectId)),
+    status: Joi.string().valid('Published', 'Draft'),
+    isPremium: Joi.boolean(),
   }).min(1),
 };
 

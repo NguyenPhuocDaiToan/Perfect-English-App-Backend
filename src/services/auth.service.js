@@ -8,6 +8,7 @@ const { Token } = require('../models');
 const ApiError = require('../utils/ApiError');
 const { tokenTypes } = require('../config/tokens');
 const logger = require('../config/logger');
+const userActivityService = require('./userActivity.service');
 
 /**
  * Tạo mã giới thiệu duy nhất dựa trên email và random bytes
@@ -25,7 +26,8 @@ const generateUniqueReferralCode = async (email) => {
  * @param {object} userBody
  * @returns {Promise<User>}
  */
-const { UserRole, UserStatus } = require('../constants/app.constants');
+const { UserRole } = require('../constants/app.constants');
+
 const register = async (subdomain, userBody) => {
   // 1. Check email tồn tại
   const isExist = await userService.findOne({ email: userBody.email }, { lean: true });
@@ -33,7 +35,7 @@ const register = async (subdomain, userBody) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email đã được sử dụng');
   }
 
-  const { name, email, password } = userBody;
+  const { name, email, password, phone } = userBody;
   const isAdmin = subdomain === 'admin';
   const role = isAdmin ? UserRole.Admin : UserRole.Student;
 
@@ -41,23 +43,9 @@ const register = async (subdomain, userBody) => {
   try {
     newUser = await userService.create({
       name,
-      /**
-       * Đăng nhập
-       * @param {string} email
-       * @param {string} password
-       * @returns {Promise<User>}
-       */
-      const login = async (email, password) => {
-        const user = await userService.findOne({ email });
-        if (!user) {
-          throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
-        }
-        const isMatch = await user.isPasswordMatch(password);
-        if (!isMatch) {
-          throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
-        }
-        return user;
-      };
+      email,
+      password,
+      role,
     });
 
     // 4. Chuẩn bị data profile
@@ -78,6 +66,8 @@ const register = async (subdomain, userBody) => {
       await employeeService.create(dataProfile);
     } else {
       const myReferralCode = await generateUniqueReferralCode(email);
+      // TODO: Logic to find referrer
+      const referredByCustomer = null;
 
       await customerService.create({
         ...dataProfile,
@@ -95,6 +85,13 @@ const register = async (subdomain, userBody) => {
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, `Không thể đăng ký: ${error.message}`);
   }
 
+  await userActivityService.create({
+    user: newUser.id,
+    action: 'Register',
+    details: 'User registered new account',
+    status: 'Success',
+  });
+
   return newUser;
 };
 
@@ -105,12 +102,21 @@ const register = async (subdomain, userBody) => {
  * @returns {Promise<User>}
  */
 const login = async (username, password) => {
+  // logger.info(username, password);
   const user = await userService.findOne({
-    $or: [{ email: username }, { phone: username }],
+    $or: [{ email: username }],
   });
   if (!user || !(await user.isPasswordMatch(password))) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Email hoặc mật khẩu không chính xác');
   }
+
+  await userActivityService.create({
+    user: user.id,
+    action: 'Login',
+    details: 'User logged in via email/password',
+    status: 'Success',
+  });
+
   return user;
 };
 

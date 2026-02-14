@@ -3,9 +3,9 @@ const { objectId } = require('./custom.validation');
 
 const create = {
   body: Joi.object({
-    id: Joi.number(),
     type: Joi.string().required(),
     topic: Joi.string().required(),
+    subTopic: Joi.string().required(),
     difficulty: Joi.string().required(),
     questionText: Joi.string().required(),
     options: Joi.array().items(Joi.object({ text: Joi.string(), isCorrect: Joi.boolean() })),
@@ -21,6 +21,7 @@ const paginate = {
     search: Joi.string(),
     type: Joi.string(),
     topic: Joi.string(),
+    subTopic: Joi.string(),
     difficulty: Joi.string(),
     questionText: Joi.string(),
     sortBy: Joi.string().allow('', null),
@@ -43,6 +44,7 @@ const updateById = {
   body: Joi.object({
     type: Joi.string(),
     topic: Joi.string(),
+    subTopic: Joi.string(),
     difficulty: Joi.string(),
     questionText: Joi.string(),
     options: Joi.array().items(Joi.object({ text: Joi.string(), isCorrect: Joi.boolean() })),

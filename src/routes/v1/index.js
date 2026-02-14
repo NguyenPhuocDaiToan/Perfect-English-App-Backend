@@ -16,7 +16,9 @@ const topicRoute = require('./topic.route');
 const lessonRoute = require('./lesson.route');
 const questionRoute = require('./question.route');
 const exerciseRoute = require('./exercise.route');
-const userProgressRoute = require('./userProgress.route');
+const grammarTopicRoute = require('./grammarTopic.route');
+const testimonialRoute = require('./testimonial.route');
+const userActivityRoute = require('./userActivity.route');
 
 const router = express.Router();
 
@@ -42,7 +44,7 @@ const defaultRoutes = [
     route: permissionRoute,
   },
   {
-    path: '/blog-posts',
+    path: '/blogs',
     route: blogPostRoute,
   },
   {
@@ -78,8 +80,16 @@ const defaultRoutes = [
     route: exerciseRoute,
   },
   {
-    path: '/user-progress',
-    route: userProgressRoute,
+    path: '/grammar-topics',
+    route: grammarTopicRoute,
+  },
+  {
+    path: '/testimonials',
+    route: testimonialRoute,
+  },
+  {
+    path: '/user-activities',
+    route: userActivityRoute,
   },
 ];
 

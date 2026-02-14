@@ -5,6 +5,7 @@
  * - Tự động thêm hoặc cập nhật nếu có thay đổi
  */
 
+/* eslint-disable no-console, no-await-in-loop */
 const mongoose = require('mongoose');
 const Permission = require('../models/permission.model');
 const User = require('../models/user.model');

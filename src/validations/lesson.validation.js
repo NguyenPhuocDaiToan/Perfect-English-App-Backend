@@ -3,13 +3,13 @@ const { objectId } = require('./custom.validation');
 
 const create = {
   body: Joi.object({
-    id: Joi.number(),
+    id: Joi.string().custom(objectId),
     title: Joi.string().required(),
     level: Joi.string().required(),
     status: Joi.string(),
-    topicIds: Joi.array().items(Joi.number()),
+    topics: Joi.array().items(Joi.string().custom(objectId)),
     content: Joi.string(),
-    exerciseId: Joi.number(),
+    exercise: Joi.string().allow(null, '').custom(objectId),
     isPremium: Joi.boolean(),
   }),
 };
@@ -41,9 +41,9 @@ const updateById = {
     title: Joi.string(),
     level: Joi.string(),
     status: Joi.string(),
-    topicIds: Joi.array().items(Joi.number()),
+    topics: Joi.array().items(Joi.string().custom(objectId)),
     content: Joi.string(),
-    exerciseId: Joi.number(),
+    exercise: Joi.string().allow(null, '').custom(objectId),
     isPremium: Joi.boolean(),
   }).min(1),
 };
